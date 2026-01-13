@@ -1,0 +1,12 @@
+aws sts get-caller-identity
+
+aws eks update-kubeconfig --region us-east-2 --name ReactAppCluster
+
+kubectl edit configmap aws-auth -n kube-system
+
+
+  mapRoles: |
+    - rolearn: arn:aws:iam::954976288182:role/ROLE_GITHUBACTIONS_EKS
+      username: github-actions
+      groups:
+        - system:masters
