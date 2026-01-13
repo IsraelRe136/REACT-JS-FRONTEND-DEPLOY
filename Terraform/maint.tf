@@ -40,6 +40,8 @@ module "eks" {
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
 
+
+
   # Configuración de red
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
@@ -61,7 +63,14 @@ module "eks" {
       most_recent = true
     }
     vpc-cni = {
-      most_recent = true
+         most_recent = true
+
+    configuration_values = jsonencode({
+      env = {
+        ENABLE_PREFIX_DELEGATION = "true"
+        WARM_PREFIX_TARGET      = "1"
+      }
+    })
     }
   }
 
@@ -88,124 +97,24 @@ module "eks" {
         NodeGroup   = "main"
       }
 
-      # Taints opcionales
-      # taints = [
-      #   {
-      #     key    = "dedicated"
-      #     value  = "true"
-      #     effect = "NO_SCHEDULE"
-      #   }
-      # ]
 
-      # Update configuration
       update_config = {
         max_unavailable_percentage = 50
       }
     }
 
-    # Node group para workloads específicos (opcional)
-    # spot = {
-    #   name           = "spot-nodegroup"
-    #   instance_types = ["t3.medium", "t3.large"]
-    #   capacity_type  = "SPOT"
-    #
-    #   min_size     = 1
-    #   max_size     = 3
-    #   desired_size = 1
-    #
-    #   disk_size = 20
-    #
-    #   labels = {
-    #     Environment = var.environment
-    #     NodeGroup   = "spot"
-    #   }
-    # }
+
   }
 
   tags = {
     Environment = var.environment
     Region      = "us-east-2"
   }
+
 }
 
-# Security Group adicional para acceso (opcional)
-# resource "aws_security_group" "additional_cluster_access" {
-#   name_prefix = "${var.cluster_name}-additional-access"
-#   vpc_id      = module.vpc.vpc_id
-
-#   ingress {
-#     from_port   = 443
-#     to_port     = 443
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"] # Restringe esto en producción!
-#   }
-
-#   tags = {
-#     Name = "${var.cluster_name}-additional-access"
-#   }
-# }
 
 
 
-# module "vpc" {
-#   source  = "terraform-aws-modules/vpc/aws"
-#   version = "~> 5.0"
-
-#   name = "eks-vpc"
-#   cidr = "10.0.0.0/16"
-
-#   azs             = ["us-east-2a", "us-east-2b"]
-#   public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
-#   private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
-
-#   enable_nat_gateway = true
-#   single_nat_gateway = true
-
-#   tags = {
-#     Terraform   = "true"
-#     Environment = "dev"
-#   }
-# }
-
-
-
-# module "eks" {
-#   source  = "terraform-aws-modules/eks/aws"
-#   version = "~> 20.0" # Use a compatible version
-
-#   # Use the correct parameter name for cluster name
-#   name           = "primuslearning"
-
-
-#   vpc_id     = module.vpc.vpc_id
-#   subnet_ids = module.vpc.private_subnets
-
-#   enable_cluster_creator_admin_permissions = true
-
-#   # Access Entries configuration
-#   access_entries = {
-#     israel = {
-#       principal_arn = "arn:aws:iam::954976288182:user/israel"
-#       policy_associations = {
-#         admin = {
-#           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-#           access_scope = {
-#             type = "cluster"
-#           }
-#         }
-#       }
-#     }
-#   }
-
-#   # Node group configuration
-#   eks_managed_node_groups = {
-#     default = {
-#       instance_types = ["t2.micro"]
-#       min_size     = 1
-#       max_size     = 3
-#       desired_size = 2
-#     }
-#   }
-# }
 
 

@@ -41,7 +41,7 @@ jobs:
         
     - name: Update kubeconfig
       run: |
-        aws eks update-kubeconfig --region us-east-2 --name ReactAppCluster
+        aws eks update-kubeconfig --region us-east-2 --name ReactAppCluster2
         kubectl cluster-info
 
 
@@ -50,7 +50,7 @@ jobs:
       run: |
         kubectl apply -f deployment.yaml
         kubectl apply -f service.yaml
-        aws eks describe-cluster --name ReactAppCluster --region us-east-2 --query cluster.status
+        aws eks describe-cluster --name ReactAppCluster2 --region us-east-2 --query cluster.status
         kubectl get nodes --v=6  # Verbose output for debuggin
         kubectl rollout restart deployment react-frontend
 

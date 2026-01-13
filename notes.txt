@@ -1,6 +1,6 @@
 aws sts get-caller-identity
 
-aws eks update-kubeconfig --region us-east-2 --name ReactAppCluster
+aws eks update-kubeconfig --region us-east-2 --name ReactAppCluster2
 
 kubectl edit configmap aws-auth -n kube-system
 
