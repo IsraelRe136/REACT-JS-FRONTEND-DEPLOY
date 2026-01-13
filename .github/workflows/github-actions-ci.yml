@@ -34,14 +34,14 @@ jobs:
     
     - name: Build, tag, and push Docker image
       run: |
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/REACTFRONTENT:1.1 .
-        docker push ${{ steps.login-ecr.outputs.registry }}/REACTFRONTENT:1.1
+        docker build -t ${{ steps.login-ecr.outputs.registry }}/reactfrontent:1.1 .
+        docker push ${{ steps.login-ecr.outputs.registry }}/reactfrontent:1.1
 
 
         
     - name: Update kubeconfig
       run: |
-        aws eks update-kubeconfig --region us-east-2 --name REACTFRONTENT
+        aws eks update-kubeconfig --region us-east-2 --name ReactAppCluster
         kubectl cluster-info
 
 
@@ -50,7 +50,7 @@ jobs:
       run: |
         kubectl apply -f deployment.yaml
         kubectl apply -f service.yaml
-        aws eks describe-cluster --name REACTFRONTENT --region us-east-2 --query cluster.status
+        aws eks describe-cluster --name ReactAppCluster --region us-east-2 --query cluster.status
         kubectl get nodes --v=6  # Verbose output for debuggin
         kubectl rollout restart deployment react-frontend
 
