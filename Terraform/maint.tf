@@ -78,7 +78,7 @@ module "eks" {
   eks_managed_node_groups = {
     # Node group principal
     main = {
-      name           = "main-nodegroup"
+      name           = "main-nodegroup-v2"
       instance_types = [var.node_instance_type]
       capacity_type  = "ON_DEMAND"
 

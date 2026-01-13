@@ -1,7 +1,7 @@
 variable "cluster_name" {
   description = "Nombre del cluster EKS"
   type        = string
-  default     = "ReactAppCluster"
+  default     = "ReactAppCluster2"
 }
 
 variable "cluster_version" {
