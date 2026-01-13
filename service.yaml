@@ -4,9 +4,9 @@ metadata:
   name: reactapp
 spec:
   selector:
-    app: reactapp
+    app: react-frontend
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 80
   type: LoadBalancer

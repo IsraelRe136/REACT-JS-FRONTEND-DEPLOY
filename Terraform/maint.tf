@@ -78,15 +78,15 @@ module "eks" {
   eks_managed_node_groups = {
     # Node group principal
     main = {
-      name           = "main-nodegroup-v2"
+      name           = "main-nodegroup-v3"
       instance_types = [var.node_instance_type]
       capacity_type  = "ON_DEMAND"
 
       ami_type = "AL2023_x86_64_STANDARD"
 
-      min_size     = 2
+      min_size     = 3
       max_size     = 5
-      desired_size = 2
+      desired_size = 3
 
       # Configuración de disco
       disk_size = 20
