@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ReactAppCluster
+  name: reactapp
 spec:
   selector:
-    app: ReactAppCluster
+    app: reactapp
   ports:
     - protocol: TCP
       port: 80
