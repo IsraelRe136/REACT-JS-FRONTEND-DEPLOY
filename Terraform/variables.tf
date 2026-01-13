@@ -1,7 +1,7 @@
 variable "cluster_name" {
   description = "Nombre del cluster EKS"
   type        = string
-  default     = "primuslearning"
+  default     = "ReactAppCluster"
 }
 
 variable "cluster_version" {
