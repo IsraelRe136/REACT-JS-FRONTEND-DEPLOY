@@ -87,10 +87,10 @@ module "eks" {
       max_size     = 5
       desired_size = 3
 
-      # Configuración de disco
+    
       disk_size = 20
 
-      # Labels para los pods
+      
       labels = {
         Environment = var.environment
         NodeGroup   = "main"
@@ -111,6 +111,7 @@ module "eks" {
   }
 
 }
+
 
 
 
